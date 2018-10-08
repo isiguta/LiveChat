@@ -16,7 +16,10 @@
 		8A1B210E2159620F0023AE88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B210D2159620F0023AE88 /* Images.xcassets */; };
 		8A1B211321596E600023AE88 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211221596E600023AE88 /* LoginViewController.swift */; };
 		8A1B211521596E6B0023AE88 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211421596E6B0023AE88 /* RegisterViewController.swift */; };
-		8A1B211921596ED80023AE88 /* ChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211821596ED80023AE88 /* ChatTableViewController.swift */; };
+		8A1B211921596ED80023AE88 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211821596ED80023AE88 /* ChatViewController.swift */; };
+		8A1B211C215A91060023AE88 /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B211B215A91060023AE88 /* MessageCell.xib */; };
+		8A1B211E215A91160023AE88 /* CustomMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211D215A91160023AE88 /* CustomMessageCell.swift */; };
+		8A1B2120215AB5C50023AE88 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B211F215AB5C50023AE88 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +35,10 @@
 		8A1B210D2159620F0023AE88 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8A1B211221596E600023AE88 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8A1B211421596E6B0023AE88 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		8A1B211821596ED80023AE88 /* ChatTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewController.swift; sourceTree = "<group>"; };
+		8A1B211821596ED80023AE88 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8A1B211B215A91060023AE88 /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
+		8A1B211D215A91160023AE88 /* CustomMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessageCell.swift; sourceTree = "<group>"; };
+		8A1B211F215AB5C50023AE88 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		EFA6AF5DF7B979B57A576C82 /* Pods-LiveChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LiveChat/Pods-LiveChat.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +100,7 @@
 				8A1B20FB21594FF20023AE88 /* WelcomeViewController.swift */,
 				8A1B211221596E600023AE88 /* LoginViewController.swift */,
 				8A1B211421596E6B0023AE88 /* RegisterViewController.swift */,
-				8A1B211821596ED80023AE88 /* ChatTableViewController.swift */,
+				8A1B211821596ED80023AE88 /* ChatViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -102,6 +108,7 @@
 		8A1B21102159625D0023AE88 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8A1B211A215A90E10023AE88 /* Custom */,
 				8A1B20FD21594FF20023AE88 /* Main.storyboard */,
 				8A1B210221594FF40023AE88 /* LaunchScreen.storyboard */,
 			);
@@ -111,8 +118,18 @@
 		8A1B21112159626D0023AE88 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8A1B211F215AB5C50023AE88 /* Message.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		8A1B211A215A90E10023AE88 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				8A1B211D215A91160023AE88 /* CustomMessageCell.swift */,
+				8A1B211B215A91060023AE88 /* MessageCell.xib */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		9614BF62C40FA8CD3AA35A9F /* Pods */ = {
@@ -184,6 +201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1B211C215A91060023AE88 /* MessageCell.xib in Resources */,
 				8A1B210421594FF40023AE88 /* LaunchScreen.storyboard in Resources */,
 				8A1B210E2159620F0023AE88 /* Images.xcassets in Resources */,
 				8A1B210C215952750023AE88 /* GoogleService-Info.plist in Resources */,
@@ -255,11 +273,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1B211E215A91160023AE88 /* CustomMessageCell.swift in Sources */,
 				8A1B211321596E600023AE88 /* LoginViewController.swift in Sources */,
 				8A1B20FC21594FF20023AE88 /* WelcomeViewController.swift in Sources */,
 				8A1B20FA21594FF20023AE88 /* AppDelegate.swift in Sources */,
 				8A1B211521596E6B0023AE88 /* RegisterViewController.swift in Sources */,
-				8A1B211921596ED80023AE88 /* ChatTableViewController.swift in Sources */,
+				8A1B211921596ED80023AE88 /* ChatViewController.swift in Sources */,
+				8A1B2120215AB5C50023AE88 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
