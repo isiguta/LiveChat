@@ -49,6 +49,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.avatarImageView.image = UIImage(named: "egg")
         cell.senderUsername.text = currentMessage.sender
         
+        
+        
         return cell
     }
     
