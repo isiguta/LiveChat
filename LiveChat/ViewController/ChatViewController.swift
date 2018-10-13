@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseAuth
+import Firebase
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -17,6 +17,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var sendButton: UIButton!
     
     let fbAuth = Auth.auth()
+    let fbDatabase = Database.database()
+    
+    var messageArray = [Message]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +32,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         messages.addGestureRecognizer(tapGesture)
+        
+        retrieveMessages()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 5
+        return messageArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell") as! CustomMessageCell
-        cell.messageBody.text = "lol"
+        let currentMessage = messageArray[indexPath.row]
+        
+        cell.messageBody.text = currentMessage.messageBody
+        cell.avatarImageView.image = UIImage(named: "egg")
+        cell.senderUsername.text = currentMessage.sender
+        
         return cell
     }
     
@@ -59,13 +69,57 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.view.layoutIfNeeded()
         }
     }
+    
     @IBAction func logUserOut(_ sender: Any) {
         do {
             try fbAuth.signOut()
         } catch {
             print("Something went wrong with loging out")
         }
+    }
+    
+    @IBAction func sendMessage(_ sender: Any) {
+        messageTextField.endEditing(true)
+        messageTextField.isEnabled = false
+        sendButton.isEnabled = false
         
+        let messagesDB = fbDatabase.reference().child("Messages")
+        
+        let messageDictionary = ["Sender": Auth.auth().currentUser?.email,
+                                 "MessageBody": messageTextField.text!]
+        
+        messagesDB.childByAutoId().setValue(messageDictionary) {
+            (error, reference) in
+            
+            if error != nil {
+                print(error!)
+            }
+            else {
+                print("Message saved successfully!")
+            }
+            
+            self.messageTextField.isEnabled = true
+            self.sendButton.isEnabled = true
+            self.messageTextField.text = ""
+        }
+    }
+    
+    func retrieveMessages() {
+        let messageDB = Database.database().reference().child("Messages")
+        
+        messageDB.observe(.childAdded) { (snapshot) in
+            
+            let snapshotValue = snapshot.value as! Dictionary<String,String>
+            let text = snapshotValue["MessageBody"]!
+            let sender = snapshotValue["Sender"]!
+            
+            let message = Message()
+            message.messageBody = text
+            message.sender = sender
+            
+            self.messageArray.append(message)
+            self.messages.reloadData()
+        }
     }
     
     /*
