@@ -8,6 +8,7 @@
 
 import UIKit
 import  FirebaseAuth
+import SVProgressHUD
 
 class RegisterViewController: UIViewController {
 
@@ -21,11 +22,13 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func register(_ sender: Any) {
+        SVProgressHUD.show()
         Auth.auth().createUser(withEmail: usernameTextField.text!, password: passwordTextField.text!) {
             (result, error) in
             if let err = error {
                 print("Something went wrong!!:\n\(err)")
             } else {
+                SVProgressHUD.dismiss()
                 print(result)
             }
         }
