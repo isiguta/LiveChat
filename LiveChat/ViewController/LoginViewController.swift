@@ -10,14 +10,16 @@ import UIKit
 import FirebaseAuth
 import SVProgressHUD
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
     }
     
@@ -32,6 +34,11 @@ class LoginViewController: UIViewController {
                 self.performSegue(withIdentifier: "goToChat", sender: self)
             }
         }
+    }
+    
+    @objc func hideKeyboard() {
+        usernameTextField.endEditing(true)
+        passwordTextField.endEditing(true)
     }
     
     /*
