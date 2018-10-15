@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import ChameleonFramework
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -26,7 +27,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         messages.dataSource = self
         messages.delegate = self
-        messages.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "customMessageCell")
+        
+        messages.register(UINib(nibName: "UserMessageCell", bundle: nil), forCellReuseIdentifier: "userMessageCell")
+        messages.register(UINib(nibName: "PartnersMessageCell", bundle: nil), forCellReuseIdentifier: "partnersMessageCell")
         
         messageTextField.delegate = self
         
@@ -37,21 +40,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return messageArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customMessageCell") as! CustomMessageCell
         let currentMessage = messageArray[indexPath.row]
+        let cellResourceName = currentMessage.sender == fbAuth.currentUser?.email ? "userMessageCell" : "partnersMessageCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellResourceName) as! CustomMessageCell
         
-        cell.messageBody.text = currentMessage.messageBody
-        cell.avatarImageView.image = UIImage(named: "egg")
-        cell.senderUsername.text = currentMessage.sender
-        
-        
+        prepare(cell: cell, currentMessage)
         
         return cell
+    }
+    
+    func prepare(cell: CustomMessageCell, _ message: Message) {
+        cell.messageBody.text = message.messageBody
+        cell.avatarImageView.image = UIImage(named: "egg")
+        cell.senderUsername.text = message.sender
     }
     
     @objc func tableViewTapped() {
